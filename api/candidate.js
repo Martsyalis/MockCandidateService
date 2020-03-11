@@ -18,6 +18,28 @@ module.exports.submit = (event, context, callback) => {
     return;
   }
 
+  const submitCandidateP = candidate => {
+    console.log('Submitting candidate');
+    const candidateInfo = {
+      TableName: process.env.CANDIDATE_TABLE,
+      Item: candidate,
+    };
+    return dynamoDb.put(candidateInfo).promise()
+      .then(res => candidate);
+  };
+  
+  const candidateInfo = (fullname, email, experience) => {
+    const timestamp = new Date().getTime();
+    return {
+      id: uuid.v1(),
+      fullname: fullname,
+      email: email,
+      experience: experience,
+      submittedAt: timestamp,
+      updatedAt: timestamp,
+    };
+  };
+
   submitCandidateP(candidateInfo(fullname, email, experience))
   .then(res => {
     callback(null, {
@@ -37,26 +59,33 @@ module.exports.submit = (event, context, callback) => {
       })
     })
   });
-
-const submitCandidateP = candidate => {
-  console.log('Submitting candidate');
-  const candidateInfo = {
-    TableName: process.env.CANDIDATE_TABLE,
-    Item: candidate,
-  };
-  return dynamoDb.put(candidateInfo).promise()
-    .then(res => candidate);
 };
 
-const candidateInfo = (fullname, email, experience) => {
-  const timestamp = new Date().getTime();
-  return {
-    id: uuid.v1(),
-    fullname: fullname,
-    email: email,
-    experience: experience,
-    submittedAt: timestamp,
-    updatedAt: timestamp,
+
+module.exports.list = (event, context, callback) => {
+  var params = {
+      TableName: process.env.CANDIDATE_TABLE,
+      ProjectionExpression: "id, fullname, email"
   };
-};
+
+  console.log("Scanning Candidate table.");
+  const onScan = (err, data) => {
+
+      if (err) {
+          console.log('Scan failed to load data. Error JSON:', JSON.stringify(err, null, 2));
+          callback(err);
+      } else {
+          console.log("Scan succeeded.");
+          return callback(null, {
+              statusCode: 200,
+              body: JSON.stringify({
+                  candidates: data.Items
+              })
+          });
+      }
+
+  };
+
+  dynamoDb.scan(params, onScan);
+
 };
