@@ -93,7 +93,7 @@ resources:
 
 functions:
   candidateSubmission:
-    handler: api/candidate.submit
+    handler: api/candidate/candidate.submit
     memorySize: 128
     description: Submit candidate information and starts interview process.
     events:
@@ -102,7 +102,7 @@ functions:
           method: post
           
   listCandidates:
-    handler: api/candidate.list
+    handler: api/candidate/candidate.listAll
     memorySize: 128
     description: List all candidates
     events:
@@ -111,7 +111,7 @@ functions:
           method: get
 
   candidateDetails:
-    handler: api/candidate.get
+    handler: api/candidate/candidate.getById
     events:
       - http:
           path: candidates/{id}
