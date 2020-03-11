@@ -1,0 +1,1 @@
+mock project to remind myself how to use Serverless for API Gateway, AWS Lambda and DinamoDB integration
