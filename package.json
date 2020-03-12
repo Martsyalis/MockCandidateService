@@ -1,0 +1,23 @@
+{
+  "name": "candidate-service",
+  "version": "1.0.0",
+  "description": "mock project to remind myself how to use Serverless for API Gateway, AWS Lambda and DinamoDB integration",
+  "main": "index.js",
+  "dependencies": {
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Martsyalis/MockCandidateService.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Martsyalis/MockCandidateService/issues"
+  },
+  "homepage": "https://github.com/Martsyalis/MockCandidateService#readme"
+}
