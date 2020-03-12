@@ -7,7 +7,6 @@ async function listAll(event) {
     ProjectionExpression: 'id, fullname, email',
   };
   const candidates = await dynamoDb.scan(params).promise();
-  console.log('candidates: ', candidates);
   return {
     statusCode: 200,
     body: JSON.stringify({

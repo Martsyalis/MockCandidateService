@@ -9,13 +9,10 @@ async function getById(event) {
     },
   };
   const candidate = await dynamoDb.get(params).promise();
-  console.log('candidate is: ', candidate);
   const response = {
     statusCode: 200,
     body: JSON.stringify(candidate.Item),
   };
-  console.log('response is:', response);
-
   return response;
 };
 

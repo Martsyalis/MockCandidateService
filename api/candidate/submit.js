@@ -3,7 +3,6 @@ const uuid = require('uuid');
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 async function submit (event) {
-  console.log('got to submit')
   try {
     const requestBody = JSON.parse(event.body);
     const fullname = requestBody.fullname;
@@ -11,8 +10,7 @@ async function submit (event) {
     const experience = requestBody.experience;
 
     if (typeof fullname !== 'string' || typeof email !== 'string' || typeof experience !== 'number') {
-      console.error('Validation Failed');
-      return new Error('Couldn\'t submit candidate because of validation errors.')
+      return new Error('Couldn\'t submit candidate because of validation errors. try again!')
     }
 
     const submitCandidateP = async candidate => {
