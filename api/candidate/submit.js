@@ -10,7 +10,12 @@ async function submit (event) {
     const experience = requestBody.experience;
 
     if (typeof fullname !== 'string' || typeof email !== 'string' || typeof experience !== 'number') {
-      return new Error('Couldn\'t submit candidate because of validation errors. try again!')
+      return {
+        statusCode: 412,
+        body: JSON.stringify({
+          message: `Candidate info failed validation`
+        })
+      }
     }
 
     const submitCandidateP = async candidate => {
